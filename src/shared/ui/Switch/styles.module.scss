@@ -1,0 +1,142 @@
+.switchLabel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.switchInput {
+  display: none;
+}
+
+.switchToggle {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  width: 52px;
+  height: 28px;
+  background-color: #e5e7eb;
+  border-radius: 9999px;
+  transition: background-color 0.3s ease;
+
+  &.sm {
+    width: 44px;
+    height: 25px;
+  }
+
+  &.lg {
+    width: 64px;
+    height: 34px;
+  }
+
+  &.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.primary {
+  border: 1px solid transparent;
+  background: linear-gradient(to bottom, #fff, #fff) padding-box,
+    linear-gradient(to bottom, var(--color-green-300), var(--color-green-800))
+      border-box;
+}
+
+.green {
+  border: 1px solid var(--color-green-800);
+  background: transparent;
+}
+
+.switchThumb {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  background: radial-gradient(circle, #65AC63, var(--color-green-800));
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+  left: 2px;
+
+  .sm & {
+    width: 19px;
+    height: 19px;
+    left: 2px;
+  }
+
+  .lg & {
+    width: 30px;
+    height: 30px;
+    left: 2px;
+  }
+}
+
+.switchInput:checked + .switchToggle {
+  background-color: #3b82f6;
+
+  .switchThumb {
+    transform: translateX(24px);
+  }
+
+  &.primary {
+    background-color: var(--color-green-700);
+  }
+  &.green {
+    background: linear-gradient(
+          to bottom,
+          rgba(48, 83, 47, 0.8),
+          rgba(149, 251, 149, 0.8)
+        )
+        padding-box,
+      linear-gradient(to bottom, var(--color-green-300), var(--color-green-800))
+        border-box;
+  }
+}
+
+.switchInput:checked {
+  &.primary {
+    background-color: var(--color-green-700);
+  }
+}
+
+.switchInput:checked + .switchToggle.sm .switchThumb {
+  transform: translateX(18px);
+}
+
+.switchInput:checked + .switchToggle.lg .switchThumb {
+  transform: translateX(30px);
+}
+
+.switchText {
+  font-size: 14px;
+  font-weight: 500;
+  color: #1f2937;
+}
+
+.switchInput:disabled + .switchToggle {
+  cursor: not-allowed;
+}
+
+:global(.dark) {
+  .primary {
+    border: 1px solid transparent;
+    background: linear-gradient(
+          to bottom,
+          var(--color-zinc-900),
+          var(--color-neutral-900)
+        )
+        padding-box,
+      linear-gradient(to bottom, var(--color-green-300), var(--color-green-800))
+        border-box;
+  }
+
+  .switchInput:checked + .switchToggle {
+    &.primary {
+      background-color: var(--color-green-700);
+    }
+  }
+
+  .switchThumb {
+    background-color: #fff;
+  }
+}

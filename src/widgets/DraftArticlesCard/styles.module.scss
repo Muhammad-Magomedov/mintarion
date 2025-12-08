@@ -1,0 +1,52 @@
+.card {
+    display: flex;
+    flex-direction: column;
+    border-radius: 5px;
+    border-width: 1px;
+    border-style: solid;
+}
+.header {
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+.headerLink {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.875em;
+}
+.list {
+    display: flex;
+    flex-direction: column;
+}
+.listItem {
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    border-top-width: 1px;
+    border-top-style: solid;
+}
+.listItemText {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    line-height: 120%;
+}
+.listItemMeta {
+    font-size: 0.875em;
+}
+.listItemBtn {
+    padding: 7px 20px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    border-width: 1px;
+    border-style: solid;
+    transition: all 0.3s;
+}

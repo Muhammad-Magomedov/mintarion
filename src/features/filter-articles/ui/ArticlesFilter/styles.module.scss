@@ -1,0 +1,13 @@
+.content {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+.select {
+    box-shadow: 0 0 15px var(--color-gray-550);
+}
+.selectTogglePrefix {
+    display: inline-block;
+    margin-right: 10px;
+    font-weight: 400 !important;
+}

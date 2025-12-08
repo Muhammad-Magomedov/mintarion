@@ -1,0 +1,29 @@
+.page {
+    padding: 20px;
+}
+.body {
+    margin: 40px auto 0;
+    max-width: 960px;
+    border-radius: 5px;
+    border-width: 1px;
+    border-style: solid;
+}
+.row {
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+.col {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.caption {}
+.desc {
+    font-size: 0.875em;
+}
+.btn {
+    gap: 5px;
+}

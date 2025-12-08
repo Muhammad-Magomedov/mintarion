@@ -1,0 +1,19 @@
+.layout {
+    display: flex;
+    min-height: 100vh;
+    overflow: auto;
+}
+.sidebar {
+    flex: 0 0 280px;
+    min-height: 100vh;
+}
+.body {
+    padding-bottom: 10vh;
+    flex: 1 0 auto;
+    height: 100vh;
+    overflow-y: scroll;
+    scrollbar-width: none;
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}

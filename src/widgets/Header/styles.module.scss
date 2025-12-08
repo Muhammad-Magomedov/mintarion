@@ -1,0 +1,52 @@
+.header {
+    width: 100%;
+    backdrop-filter: blur(100px);
+}
+.content {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.right {
+    gap: 30px;
+}
+.headerLink {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 18px;
+    font-weight: 600;
+}
+.logo {
+    height: 22px;
+}
+.searchForm {
+    width: 390px;
+}
+.socials {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.authBtnList {
+    display: flex;
+    align-items: center;
+    gap: inherit;
+}
+.profileInfo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.profileMenu {
+    position: absolute;
+    top: 100%;
+    right: 20px;
+    z-index: 10;
+}

@@ -1,0 +1,58 @@
+.body {
+  padding: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  justify-content: flex-start;
+  overflow-x: hidden;
+}
+.bodyTop {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.bodyTopText {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+.bodyTopDesc {
+  font-size: 16px;
+  line-height: 125%;
+}
+.bodyTopContent {
+  margin-top: 40px;
+  width: 100%;
+}
+.bodyCenter {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+.bodyCenterText {
+  padding: 0 10px;
+  position: relative;
+  z-index: 2;
+
+  font-size: 18px;
+}
+.bodyCenterLine {
+  flex: 1 0 auto;
+  height: 1px;
+  display: inline-block;
+}
+.bodyBottom {
+  width: 100%;
+}
+.btnList {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}

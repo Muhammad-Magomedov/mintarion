@@ -1,0 +1,29 @@
+.form {
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+}
+.row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.input {
+    padding: 20px !important;
+    width: 100%;
+}
+.inputContent {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    .input {
+        padding-left: 0 !important;
+    }
+}
+.btn {
+    margin-top: 10px;
+    width: 100% !important;
+    max-width: none;
+    gap: 5px;
+}

@@ -1,0 +1,57 @@
+.card {
+    display: flex;
+    flex-direction: column;
+    border-radius: 5px;
+    border-width: 1px;
+    border-style: solid;
+}
+.header {
+    padding: 20px;
+}
+.body {
+    padding: 20px 36px 20px 20px;
+}
+.footer {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.info {
+    display: flex;
+    gap: 15px;
+}
+.infoImage {
+    width: 130px;
+    max-height: 90px;
+    object-fit: cover;
+}
+.infoCol {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    line-height: 120%;
+}
+.infoMeta,
+.infoLikes {
+    font-size: 0.875em;
+}
+.infoLikes {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+}
+.stats {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+.statsItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+.cardBtn {
+    max-width: none;
+}

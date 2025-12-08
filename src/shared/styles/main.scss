@@ -1,0 +1,94 @@
+@import './fonts.scss';
+
+.title {
+    &--3xl {
+        font-weight: 500;
+        font-size: 30px;
+        line-height: 120%;
+    }
+    &--2xl {
+        font-weight: 500;
+        font-size: 24px;
+        line-height: 125%;
+        color: #0D0D0C;
+    }
+    &--lg {
+        font-weight: 500;
+        font-size: 18px;
+        line-height: 120%;
+    }
+}
+
+.circle {
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+    border-radius: 50%;
+    &--green {
+        background: radial-gradient(circle, var(--color-green-300), var(--color-green-800));
+    }
+    &--yellow {
+        background: radial-gradient(circle, var(--color-yellow-200), var(--color-yellow-800));
+    }
+    &--red {
+        background: radial-gradient(circle, var(--color-rose-400), var(--color-red-900));
+    }
+}
+
+.news-card {
+    &::before {
+        opacity: 0.7;
+    }
+    &--green {
+        border: 1px solid rgba(48, 83, 47, 1);
+        &::before {
+            background: linear-gradient(30deg, rgba(48, 83, 47, 0.88) 99.5%, rgba(149, 251, 149, 0.1));
+        }
+    }
+    &--yellow {
+        border: 1px solid rgba(78, 75, 2, 1);
+        &::before {
+            background: linear-gradient(30deg, rgba(120, 116, 3, 0.88) 99.5%, rgba(249, 244, 115, 0.3));
+        }
+    }
+    &--red {
+        border: 1px solid rgba(77, 0, 6, 1);
+        &::before {
+            opacity: 0.88;
+            background: linear-gradient(to bottom, rgba(255, 122, 132, 0.5) 1%, rgba(125, 32, 39, 1));
+            
+        }
+    }
+}
+
+.dark {
+    .title {
+        &--2xl {
+            color: #fff;
+        }
+    }
+    .news-card {
+        &::before {
+            opacity: 0.3;
+        }
+        &--green {
+            border: 1px solid rgba(48, 83, 47, 1);
+            &::before {
+                background: linear-gradient(to bottom, rgba(149, 251, 149, 0.3) 10%, rgba(48, 83, 47, 1));
+            }
+        }
+        &--yellow {
+            border: 1px solid rgba(78, 75, 2, 1);
+            &::before {
+                background: linear-gradient(to bottom, rgba(249, 244, 115, 0.3) 10%, rgba(120, 116, 3, 1));
+            }
+        }
+        &--red {
+            border: 1px solid rgba(77, 0, 6, 1);
+            &::before {
+                background: linear-gradient(to bottom, rgba(255, 122, 132, 0.2) 10%, rgba(122, 32, 39, 1));
+                
+            }
+        }
+    }
+}

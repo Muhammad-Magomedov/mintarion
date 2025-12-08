@@ -1,0 +1,25 @@
+.card {
+    padding: 20px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+
+    cursor: pointer;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 10px;
+
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 120%;
+}
+.title {
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 120%;
+}
+.image {
+    width: 50px;
+    object-fit: cover;
+}

@@ -1,0 +1,65 @@
+.card {
+    display: flex;
+    flex-direction: column;
+    border-radius: 5px;
+}
+.header {
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+.headerLink {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.875em;
+}
+.list {
+    display: flex;
+    flex-direction: column;
+}
+.listItem {
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top-width: 1px;
+    border-top-style: solid;
+    gap: 15px;
+}
+.listItemLeft {
+    display: flex;
+    gap: 15px;
+}
+.listItemRight {
+    display: flex;
+    align-items: center;
+    gap: 65px;
+}
+.listItemImage {
+    width: 130px;
+    max-height: 90px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+.listItemMeta,
+.listItemLikes {
+    font-size: 0.875em;
+}
+.listItemLikes {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+}
+.listItemStats {
+    display: flex;
+    align-items: center;
+    gap: 60px;
+    font-size: 0.875em;
+}
+.listItemStatsItem {
+    display: flex;
+    flex-direction: column;
+}

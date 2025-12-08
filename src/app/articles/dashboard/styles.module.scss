@@ -1,0 +1,18 @@
+.page {
+    padding: 20px;
+}
+.body {
+    margin: 0 auto;
+    max-width: 960px;
+    min-height: 100vh;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+.articlesDataGrid {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}

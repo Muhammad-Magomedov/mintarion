@@ -1,0 +1,39 @@
+.content {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    font-size: 12px;
+    line-height: 120%;
+    * {
+        font-size: inherit !important;
+    }
+}
+.checkboxWrapper {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+.selectTrigger {
+    padding: 3px 10px;
+    border-radius: 2px;
+}
+.selectItem {
+    font-size: inherit !important;
+}
+.tokensSortSelect {
+    width: 70px;
+    > button {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 1600px) {
+    // .content {
+    //     flex-wrap: wrap;
+    // }
+    // .select {
+    //     flex: 0 0 30%;
+    //     display: none;
+    // }
+}

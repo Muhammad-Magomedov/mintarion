@@ -1,0 +1,101 @@
+.boxList {
+    margin-top: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 60px;
+}
+.box {
+    display: flex;
+    flex-direction: column;
+}
+.separator {
+    margin: 15px 0 25px;
+    width: 100%;
+    height: 1px;
+}
+.boxTitle {
+    font-size: 18px;
+}
+.subscriptionTitle {
+    font-size: 20px;
+}
+.subscriptionPrice {
+    margin-top: 10px;
+}
+.subscriptionCardDetails {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.subscriptionCardImage {
+    width: 44px;
+}
+.subscriptionBtn {
+    margin-top: 30px;
+}
+.paymentMethodsList {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.paymentMethodsListItem {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+.paymentMethodsListItemImage {
+    width: 44px;
+}
+.paymentMethodsForm {
+    margin-top: 60px;
+}
+.billingInfoUserData {
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+.billingInfoUserDataRow {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    span:last-child {
+        width: 210px;
+        display: inline-block;
+    }
+}
+.billingInfoForm {
+    margin-top: 60px;
+}
+.billingHistoryList {
+    width: 600px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.billingHistoryListItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.billingHistoryListItemBtn {
+    padding: 5px 10px;
+    font-size: 14px;
+    &:hover {
+        opacity: 1;
+    }
+}
+
+.billingHistoryTable {
+    tbody td {
+        padding: 10px 0;
+    }
+}
+.billingHistoryTableThDate { width: 150px; }
+.billingHistoryTableThAmount { width: 80px; }
+.billingHistoryTableThPaid { width: 150px; }
+.billingHistoryTableThSubscriptionPlan { width: 230px }

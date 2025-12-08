@@ -1,0 +1,78 @@
+.body {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+}
+.bodyContent {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.title {
+    text-align: center;
+}
+.tabList {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.tab {
+    padding: 10px 30px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    border-radius: 5px;
+    border-width: 1px;
+    border-style: solid;
+    transition: all 0.3s;
+}
+.tabCircle {
+    border-radius: 50%;
+    border-width: 1px;
+    border-style: solid;
+    font-size: 14px;
+}
+.searchInputContent {
+    padding: 18px 16px;
+}
+.users {
+    max-height: 355px;
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    border-radius: 5px;
+    border: 1px;
+    border-style: solid;
+    overflow-y: auto;
+    &::-webkit-scrollbar {
+        width: 3px;
+    }
+    &::-webkit-scrollbar-thumb {
+        background-color: var(--color-green-300);
+        height: 40px;
+    }
+    &::-webkit-scrollbar-track {
+        background-color: var(--color-gray-650);
+    }
+}
+.user {
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-top: 1px;
+    border-top-style: solid;
+    &:first-child {
+        border-top: none !important;
+    }
+}
+.userAvatar {
+    width: 50px;
+    height: 50px;
+}
+.userFollowBtn {
+    margin-left: auto;
+}

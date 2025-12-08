@@ -1,0 +1,40 @@
+.page {
+    padding: 20px;
+}
+.body {
+    margin: 40px auto 0;
+    max-width: 960px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+.tabs {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+.tab {
+    padding: 10px 20px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    border-radius: 5px;
+    border-width: 1px;
+    border-style: solid;
+}
+.createArticleBtn {
+    padding: 10px 65px;
+}
+.articlesFilter {
+    width: 100%;
+}
+.articlesFilterSearchForm {
+    flex: 1 0 auto;
+}

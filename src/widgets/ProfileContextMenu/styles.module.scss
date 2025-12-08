@@ -1,0 +1,47 @@
+.content {
+    padding: 20px 10px 10px;
+    width: 300px;
+
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 5px;
+}
+.header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.body {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.separator {
+    margin: 5px 0;
+    width: 100%;
+    height: 1px;
+}
+.userInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.userName {
+    font-size: 18px;
+}
+.userEmail {
+    font-size: 14px;
+}
+.btnList {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.btn {
+    padding: 10px;
+    width: 100%;
+    transition: all 0.2s ease;
+    border-radius: 5px;
+    text-align: left;
+}

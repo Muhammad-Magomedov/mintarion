@@ -1,0 +1,19 @@
+.button {
+    padding: 10px 30px;
+    max-width: fit-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    border-radius: 5px;
+    border-width: 1px;
+    border-style: solid;
+    transition: all 0.3s ease;
+    &:hover {
+        opacity: 0.5;
+    }
+}
+.text {
+    display: inline-block;
+    padding-bottom: 2px !important;
+}

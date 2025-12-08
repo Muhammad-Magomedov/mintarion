@@ -1,0 +1,50 @@
+.content {
+    width: 100%;
+    max-height: 300px;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 10;
+    border-radius: 0;
+}
+.trigger {
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    border-width: 1px;
+    border-style: solid;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 120%;
+    white-space: nowrap;
+}
+.triggerIcon {
+    margin-left: 10px;
+}
+.selectMenu {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+.selectItem {
+    padding: 12px 20px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    
+    font-size: 14px;
+    line-height: 120%;
+
+    border-width: 1px;
+    border-style: solid;
+    cursor: pointer;
+    &:last-child {
+        border-bottom-right-radius: inherit;
+        border-bottom-left-radius: inherit;
+    }
+}

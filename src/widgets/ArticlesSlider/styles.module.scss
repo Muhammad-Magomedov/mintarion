@@ -1,0 +1,19 @@
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+}
+.header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.sliderBtnList {
+    display: inline-flex;
+    gap: 10px;
+}
+.slider {
+    width: 100%;
+}

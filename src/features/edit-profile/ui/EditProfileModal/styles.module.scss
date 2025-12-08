@@ -1,0 +1,52 @@
+.body {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+}
+.title {
+    margin: 0 auto;
+    text-align: center;
+}
+.form {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+}
+.fieldListContainer {
+    margin-top: 40px;
+}
+.fieldListContainerTitle {
+    margin-bottom: 10px;
+}
+.fieldList {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.fieldContainer {
+    display: flex;
+    flex-direction: column;
+}
+.fieldDesc {
+    margin-top: 10px;
+    font-size: 14px;
+}
+.inputContent {
+    padding: 10px;
+}
+.textarea {
+    height: 100px;
+    resize: none;
+    scrollbar-width: none;
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+.errorText {
+    margin-top: 5px;
+    font-size: 12px;
+}
+.btn {
+    margin-top: 20px;
+    max-width: none;
+}

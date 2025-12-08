@@ -1,0 +1,62 @@
+.main {
+    width: 100%;
+    min-height: 100vh;
+    background-color: #002105;
+    background-image: url('/img/pages/home/main-bg-4x.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    
+    font-family: 'Roobert TRIAL', sans-serif;
+    font-weight: 300;
+    color: #fff;
+}
+.container {
+    margin: 0 auto;
+    width: 95.4vw;
+}
+.content {
+    padding: 21px 0;
+}
+.headerContent {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.logo {
+    width: 157px;
+}
+.socials {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+.box {
+    margin-top: 27vh;
+    width: 652px;
+    display: inline-flex;
+    flex-direction: column;
+    gap: 30px;
+}
+.title {
+    font-size: 90px;
+    color: #F5F5F5;
+    line-height: 100%;
+}
+.desc {
+    width: 74%;
+    font-size: 20px;
+    color: #D6D6D6;
+}
+.mainBtn > * {
+    padding: 20px 50px !important;
+    font-family: 'Roobert TRIAL', sans-serif !important;
+    font-size: 22px;
+    line-height: 100%;
+}
+
+@media (max-width: 1600px) {
+    .mainBtn > * {
+        padding: 20px 40px !important;
+    }
+}

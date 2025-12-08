@@ -1,0 +1,63 @@
+.card {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    border-radius: 5px;
+    border-width: 1px;
+    border-style: solid;
+}
+.header, .body {
+    padding: 20px;
+}
+.header {
+    padding-bottom: 0;
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+.headerText {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.closeBtn {
+    font-size: 30px;
+}
+.body {
+    padding-top: 0;
+    display: flex;
+    flex-direction: column;
+    gap: inherit;
+}
+.list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.listItem {
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 5px;
+    border-width: 1px;
+    border-style: solid;
+}
+.listItemLeft,
+.listItemRight {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+.listItemCircle {
+    width: 18px;
+    height: 18px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    border-width: 1px;
+    border-style: solid;
+
+    font-size: 10px;
+}

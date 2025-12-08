@@ -1,0 +1,41 @@
+.content {
+  padding: 30px 20px;
+  height: 90vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+.body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: inherit;
+}
+.bodyTop {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 20px;
+}
+.bodyTopSlider {
+  width: 23.8%;
+}
+.bodyTopCenterCardList {
+  width: 50%;
+}
+.bodyTopRightCardList {
+  width: 25%;
+}
+.cardList {
+  width: 100%;
+}
+
+.bodyTopSlider {
+  width: 33%;
+}
+.bodyTopCenterCardList,
+.bodyTopRightCardList {
+  width: 33%;
+}

@@ -1,0 +1,47 @@
+.content {
+    display: flex;
+    flex-direction: column;
+    border-radius: 5px;
+    border-width: 1px;
+    border-style: solid;
+}
+.header {
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+.headerLink {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.875em;
+}
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+.gridItem {
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    border-width: 1px;
+    border-style: solid;
+}
+.gridItemImage {
+    width: 130px;
+    max-height: 90px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+.gridItemText {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    line-height: 120%;
+}
+.gridItemDesc {
+    font-size: 0.875em;
+}
