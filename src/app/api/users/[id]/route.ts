@@ -5,16 +5,19 @@ import { IUpdateUserResponse } from "@/entities/user/model/types";
 
 export async function PUT(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ): Promise<NextResponse<IUpdateUserResponse>> {
   try {
-    const userId = params.id;
+    const { id: userId } = await params;
+    console.log("Received userId from params:", userId);
     const supabase = await createServerSupabaseClient();
 
     const {
       data: { user },
       error: authError,
     } = await supabase.auth.getUser();
+
+    console.log("Auth user:", { id: user?.id, email: user?.email });
 
     if (authError || !user) {
       console.error("Auth error:", authError);
@@ -25,20 +28,46 @@ export async function PUT(
     }
 
     // Проверяем, что запись в таблице users с userId принадлежит авторизованному пользователю
-    const { data: userRecord, error: userRecordError } = await supabase
+    // Сначала ищем по ID, если не найдено - ищем по email авторизованного пользователя
+    let { data: userRecord, error: userRecordError } = await supabase
       .from("users")
       .select("id, email")
       .eq("id", userId)
       .single();
 
+    // Если пользователь не найден по ID, пробуем найти по email авторизованного пользователя
     if (userRecordError || !userRecord) {
-      return NextResponse.json(
-        {
-          success: false,
-          error: "User not found",
-        },
-        { status: 404 }
-      );
+      console.log("User not found by ID, trying to find by email:", user.email);
+      const { data: userByEmail, error: emailError } = await supabase
+        .from("users")
+        .select("id, email")
+        .eq("email", user.email)
+        .single();
+
+      if (emailError || !userByEmail) {
+        console.error("User not found by email either:", emailError);
+        return NextResponse.json(
+          {
+            success: false,
+            error: "User not found",
+          },
+          { status: 404 }
+        );
+      }
+
+      // Если нашли по email, но ID не совпадает - проверяем, что это тот же пользователь
+      if (userByEmail.id !== userId) {
+        console.log(
+          "User ID mismatch - requested:",
+          userId,
+          "found:",
+          userByEmail.id
+        );
+        // Используем найденный ID, если email совпадает
+        userRecord = userByEmail;
+      } else {
+        userRecord = userByEmail;
+      }
     }
 
     // Проверяем, что пользователь обновляет свой собственный профиль

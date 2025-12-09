@@ -99,6 +99,16 @@ export const ChangeAccountDetailsForm: React.FC<
           onSuccess(response) {
             if (response.success) {
               toast.success("Account details updated!");
+              // Обновляем форму с новыми данными после успешного сохранения
+              reset({
+                firstname: response.user?.first_name || "",
+                lastname: response.user?.last_name || "",
+                email: response.user?.email || "",
+                avatar: undefined as any,
+              });
+              if (response.user?.avatar_url) {
+                setPreview(response.user.avatar_url);
+              }
             } else {
               toast.error(response.error || "Error during update");
             }
@@ -107,6 +117,7 @@ export const ChangeAccountDetailsForm: React.FC<
             toast.error("Error during change account details");
             console.error("Change account details error:", error);
           },
+          onSettled() {},
         }
       );
     }
