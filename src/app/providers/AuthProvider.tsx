@@ -35,9 +35,52 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const { data: nextAuthSession, status: nextAuthStatus } = useSession();
 
   const getUserProfile = useCallback(async () => {
-    const { data, error } = await supabase.rpc("get_user_profile");
-    console.log("getUserProfile", data, error);
-    return { data: data?.[0], error };
+    try {
+      // Получаем текущего пользователя
+      const {
+        data: { user: currentUser },
+      } = await supabase.auth.getUser();
+
+      if (!currentUser) {
+        return { data: null, error: "User not authenticated" };
+      }
+
+      // Запрашиваем профиль напрямую из таблицы users
+      const { data, error } = await supabase
+        .from("users")
+        .select("*")
+        .eq("id", currentUser.id)
+        .single();
+
+      if (error) {
+        // Если пользователя нет в таблице, возвращаем базовый профиль из auth
+        if (error.code === "PGRST116") {
+          return {
+            data: {
+              id: currentUser.id,
+              email: currentUser.email || "",
+              firstName: currentUser.user_metadata?.name?.split(" ")[0] || "",
+              lastName:
+                currentUser.user_metadata?.name
+                  ?.split(" ")
+                  .slice(1)
+                  .join(" ") || "",
+              avatarUrl: currentUser.user_metadata?.avatar_url || null,
+            },
+            error: null,
+          };
+        }
+        return { data: null, error };
+      }
+
+      return { data: data ? camelcaseKeys(data) : null, error: null };
+    } catch (error) {
+      console.error("getUserProfile error:", error);
+      return {
+        data: null,
+        error: error instanceof Error ? error.message : "Unknown error",
+      };
+    }
   }, [supabase]);
 
   // Синхронизация Google сессии с Supabase

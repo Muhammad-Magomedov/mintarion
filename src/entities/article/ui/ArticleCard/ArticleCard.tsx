@@ -93,7 +93,12 @@ export const ArticleCard: React.FC<IArticleCardProps> = ({
 
   const element = (
     <div className={cn(styles.content, styles[orientation], contentClassname)}>
-      <img className={styles.image} src={imageSrc} alt="" />
+      <img
+        className={styles.image}
+        style={{ height: "80%" }}
+        src={imageSrc}
+        alt=""
+      />
       <div className={styles.text}>
         <div className={cn(styles.meta, "text-[#5B5B5B] dark:text-gray-400")}>
           <span className={styles.category} data-category={category}>
