@@ -32,10 +32,12 @@ export type IChangeAccountDetailsForm = {
 export const ChangeAccountDetailsForm: React.FC<
   IChangeAccountDetailsFormProps
 > = ({ className, ...props }) => {
-  const { user, userProfile } = useAuth();
+  const { user, userProfile, refreshUserProfile, loading } = useAuth();
   const { mutate: updateUser, isPending } = useUpdateUserOptimistic();
 
   const [preview, setPreview] = useState<string | null>(null);
+  const [isInitialized, setIsInitialized] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -52,20 +54,40 @@ export const ChangeAccountDetailsForm: React.FC<
     },
   });
 
+  // Загружаем данные при монтировании, если их нет
   useEffect(() => {
-    if (userProfile) {
-      reset({
+    if (!loading && user && !userProfile) {
+      refreshUserProfile();
+    }
+  }, [user, userProfile, loading, refreshUserProfile]);
+
+  // Подставляем данные в форму, когда они доступны
+  useEffect(() => {
+    if (userProfile && !isInitialized) {
+      const formData = {
         firstname: userProfile.firstName || "",
         lastname: userProfile.lastName || "",
-        email: userProfile.email || "",
+        email: userProfile.email || user?.email || "",
         avatar: undefined as any,
-      });
+      };
+
+      reset(formData);
+      setIsInitialized(true);
 
       if (userProfile.avatarUrl) {
         setPreview(userProfile.avatarUrl);
       }
+    } else if (user && !userProfile && !loading && !isInitialized) {
+      // Если есть user, но нет userProfile, используем данные из user
+      reset({
+        firstname: "",
+        lastname: "",
+        email: user.email || "",
+        avatar: undefined as any,
+      });
+      setIsInitialized(true);
     }
-  }, [userProfile, reset]);
+  }, [userProfile, user, loading, reset, isInitialized]);
 
   const avatar = watch("avatar");
 

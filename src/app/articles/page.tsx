@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { usePathname, useSearchParams } from "next/navigation";
 import { Suspense } from "react";
@@ -47,13 +47,13 @@ function ArticlesContent() {
               />
             </div>
             <ArticlesGrid
-                className={styles.cardList}
-                title="Cryptocurrency Basics"
-                category="cryptocurrency-basics"
-                cols={5}
-                limit={5}
-                cardProps={{ orientation: "vertical", size: "md" }}
-                showLink
+              className={styles.cardList}
+              title="Cryptocurrency Basics"
+              category="cryptocurrency-basics"
+              cols={5}
+              limit={5}
+              cardProps={{ orientation: "vertical", size: "md" }}
+              showLink
             />
           </>
         ) : (
@@ -63,7 +63,7 @@ function ArticlesContent() {
             cols={5}
             limit={10}
             cardProps={{ orientation: "vertical", size: "md" }}
-        />
+          />
         )}
       </div>
     </div>
@@ -75,5 +75,5 @@ export default function Articles() {
     <Suspense fallback={<div>Loading...</div>}>
       <ArticlesContent />
     </Suspense>
-  )
+  );
 }

@@ -23,7 +23,8 @@ import type { IArticleBaseData } from "@/shared/types/entities/article";
 export const variants = cva("", {
   variants: {
     variant: {
-      primary: "bg-gradient-to-b from-green-20 to-green-40 border-green-800 dark:from-zinc-900 dark:to-neutral-900 dark:border-gray-650"
+      primary:
+        "bg-gradient-to-b from-green-20 to-green-40 border-green-800 dark:from-zinc-900 dark:to-neutral-900 dark:border-gray-650",
     },
     size: {
       sm: styles.sm,
@@ -85,15 +86,14 @@ export const ArticleCard: React.FC<IArticleCardProps> = ({
   // const { width: windowWidth, height: windowHeight } = useWindowSize();
   const { id, title, href, imgSrc, category, author, createdAt } = data;
 
-  const wrapperCn = cn(
-    styles.wrapper,
-    variants({ variant, size }),
-    className
-  );
+  const wrapperCn = cn(styles.wrapper, variants({ variant, size }), className);
+
+  // Используем заглушку, если изображение не указано
+  const imageSrc = imgSrc || "/img/article/1.png";
 
   const element = (
     <div className={cn(styles.content, styles[orientation], contentClassname)}>
-      {imgSrc && <img className={styles.image} src={imgSrc} alt="" />}
+      <img className={styles.image} src={imageSrc} alt="" />
       <div className={styles.text}>
         <div className={cn(styles.meta, "text-[#5B5B5B] dark:text-gray-400")}>
           <span className={styles.category} data-category={category}>
@@ -108,7 +108,10 @@ export const ArticleCard: React.FC<IArticleCardProps> = ({
           )}
         </div>
         <h4 className={styles.title}>
-          <Link className="text-neutral-950 dark:text-white" href={`/articles/${id}`}>
+          <Link
+            className="text-neutral-950 dark:text-white"
+            href={`/articles/${id}`}
+          >
             {title.slice(0, maxLength[1920].title[size ?? "md"])}...
           </Link>
         </h4>

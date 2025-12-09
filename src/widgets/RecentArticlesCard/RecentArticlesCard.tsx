@@ -17,7 +17,10 @@ export const RecentArticlesCard = () => {
         <h3 className={cn(styles.title, "title--lg", "dark:text-white")}>
           Recents Article
         </h3>
-        <Link className={cn(styles.headerLink, "dark:text-neutral-300")} href="/articles/dashboard">
+        <Link
+          className={cn(styles.headerLink, "dark:text-neutral-300")}
+          href="/articles/dashboard"
+        >
           <span>View all</span>
           <ChevronRight height="1em" />
         </Link>
@@ -33,7 +36,11 @@ export const RecentArticlesCard = () => {
             key={id}
           >
             <div className={styles.listItemLeft}>
-              <img className={styles.listItemImage} src={imgSrc} alt="" />
+              <img
+                className={styles.listItemImage}
+                src={imgSrc || "/img/article/1.png"}
+                alt=""
+              />
               <div className={styles.listItemInfo}>
                 <h4 className={styles.listItemTitle}>
                   {title.slice(0, 33)}...
@@ -45,7 +52,9 @@ export const RecentArticlesCard = () => {
                   &nbsp;&bull;&nbsp;
                   <span className={styles.listItemUsername}>Username</span>
                 </div>
-                <div className={cn(styles.listItemLikes, "dark:text-neutral-300")}>
+                <div
+                  className={cn(styles.listItemLikes, "dark:text-neutral-300")}
+                >
                   <Star height="1em" />
                   <span>0</span>
                 </div>

@@ -16,11 +16,27 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
+  align-items: flex-start;
   gap: 20px;
 }
+
+// Выравнивание заголовков на одном уровне
+.bodyTop > * {
+  display: flex;
+  flex-direction: column;
+}
+
+// Гарантируем, что все заголовки на одном уровне - фиксируем высоту заголовка
+.bodyTop :global(.header) {
+  height: 48px;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
 .bodyTopSlider {
   width: 23.8%;
+  height: 100%;
 }
 .bodyTopCenterCardList {
   width: 50%;

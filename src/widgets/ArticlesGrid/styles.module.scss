@@ -1,22 +1,24 @@
 .content {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 .cardList {
-    display: grid;
-    gap: 10px;
+  display: grid;
+  gap: 10px;
 }
 .header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  height: 48px;
+  flex-shrink: 0;
 }
 .headerLink {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
 
-    font-size: 14px;
+  font-size: 14px;
 }

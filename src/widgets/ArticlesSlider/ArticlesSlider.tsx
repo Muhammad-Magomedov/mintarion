@@ -22,15 +22,15 @@ import type { SwiperOptions } from "swiper/types";
 import type { IArticleBaseData } from "@/shared/types/entities/article";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
-    title?: string;
-    loop?: boolean;
-    slidesPerView?: number;
-    spaceBetween?: number;
-    autoplay?: {
-        delay?: number
-    }
-    limit?: number;
-    cardProps?: Omit<IArticleCardProps, "data">;
+  title?: string;
+  loop?: boolean;
+  slidesPerView?: number;
+  spaceBetween?: number;
+  autoplay?: {
+    delay?: number;
+  };
+  limit?: number;
+  cardProps?: Omit<IArticleCardProps, "data">;
 }
 
 export const ArticlesSlider: React.FC<Props> = ({
@@ -40,7 +40,7 @@ export const ArticlesSlider: React.FC<Props> = ({
   slidesPerView = 1,
   spaceBetween = 0,
   autoplay = {
-    delay: 3000
+    delay: 3000,
   },
   limit = 10,
   cardProps,
@@ -48,15 +48,17 @@ export const ArticlesSlider: React.FC<Props> = ({
 }) => {
   const { theme } = useThemeStore();
   const swiperRef = useRef<ISwiper | null>(null);
-  
+
   const { data } = useArticles();
 
   return (
     <div className={cn(styles.content, className)} {...props}>
       <div className={styles.header}>
-        {title
-            ? <h3 className={cn(styles.title, "title--2xl")}>{title}</h3>
-            : <span></span>}
+        {title ? (
+          <h3 className={cn(styles.title, "title--2xl")}>{title}</h3>
+        ) : (
+          <span></span>
+        )}
         <div className={styles.sliderBtnList}>
           <Button
             className={cn(
@@ -78,7 +80,7 @@ export const ArticlesSlider: React.FC<Props> = ({
             variant="primary"
             shape="square"
           >
-            <ChevronRight color={theme === "dark" ? "#D4D4D4" : "#3D693C"}  />
+            <ChevronRight color={theme === "dark" ? "#D4D4D4" : "#3D693C"} />
           </Button>
         </div>
       </div>

@@ -5,8 +5,7 @@ import { ChevronRight, Star } from "lucide-react";
 import * as defaultData from "@/shared/temp/data";
 import styles from "./styles.module.scss";
 
-export interface ICreatorDashboardArticlesCardProps
-  extends React.HTMLAttributes<HTMLDivElement> {
+export interface ICreatorDashboardArticlesCardProps extends React.HTMLAttributes<HTMLDivElement> {
   title?: string;
   viewAll?: {
     isVisible?: boolean;
@@ -43,7 +42,10 @@ export const CreatorDashboardArticlesCard: React.FC<
         )}
         {viewAll?.isVisible && (
           <Link
-            className={cn(styles.headerLink, "text-green-750 dark:text-neutral-300")}
+            className={cn(
+              styles.headerLink,
+              "text-green-750 dark:text-neutral-300"
+            )}
             href={viewAll?.href ?? "/"}
           >
             <span>View all</span>
@@ -63,20 +65,30 @@ export const CreatorDashboardArticlesCard: React.FC<
             key={id}
           >
             <div className={styles.listItemLeft}>
-              <img className={styles.listItemImage} src={imgSrc} alt="" />
+              <img
+                className={styles.listItemImage}
+                src={imgSrc || "/img/article/1.png"}
+                alt=""
+              />
               <div className={styles.listItemInfo}>
                 <h4 className={styles.listItemTitle}>
                   {title.slice(0, 33)}...
                 </h4>
                 <div
-                  className={cn(styles.listItemMeta, "text-[#5B5B5B] dark:text-neutral-300")}
+                  className={cn(
+                    styles.listItemMeta,
+                    "text-[#5B5B5B] dark:text-neutral-300"
+                  )}
                 >
                   <span className={styles.listItemDate}>2025/08/30</span>
                   &nbsp;&bull;&nbsp;
                   <span className={styles.listItemUsername}>Username</span>
                 </div>
                 <div
-                  className={cn(styles.listItemLikes, "text-[#5B5B5B] dark:text-neutral-300")}
+                  className={cn(
+                    styles.listItemLikes,
+                    "text-[#5B5B5B] dark:text-neutral-300"
+                  )}
                 >
                   <Star height="1em" />
                   <span>0</span>
@@ -119,7 +131,10 @@ export const CreatorDashboardArticlesCard: React.FC<
                   </span>
                 </li>
               </ul>
-              <BsThreeDotsVertical className="text-[#5B5B5B] dark:text-neutral-300" height="1.5em" />
+              <BsThreeDotsVertical
+                className="text-[#5B5B5B] dark:text-neutral-300"
+                height="1.5em"
+              />
             </div>
           </li>
         ))}
