@@ -87,15 +87,13 @@ export const Header: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
               as="link"
               href="https://t.me/mintarion_labs"
             >
-              <img src="/img/icons/socials/telegram.svg" alt="telegram" />
+              <img
+                style={{ width: "16px", height: "15px" }}
+                src="/img/icons/socials/telegram.svg"
+                alt="telegram"
+              />
             </Button>
             <Button
-              style={{
-                paddingTop: "12px",
-                paddingBottom: "12px",
-                paddingLeft: "13.5px",
-                paddingRight: "13.5px",
-              }}
               variant={theme === "dark" ? "primary" : "darkGreen"}
               shape="square"
               border={theme === "dark"}
