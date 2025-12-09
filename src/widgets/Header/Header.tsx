@@ -80,17 +80,41 @@ export const Header: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
         </div>
         <div className={cn(styles.box, styles.right)}>
           <div className={styles.socials}>
-            <Button variant={theme === "dark" ? "primary" : "darkGreen"} shape="square" border={theme === "dark"} as="link" href="https://t.me/mintarion_labs">
+            <Button
+              variant={theme === "dark" ? "primary" : "darkGreen"}
+              shape="square"
+              border={theme === "dark"}
+              as="link"
+              href="https://t.me/mintarion_labs"
+            >
               <img src="/img/icons/socials/telegram.svg" alt="telegram" />
             </Button>
-            <Button variant={theme === "dark" ? "primary" : "darkGreen"} shape="square" border={theme === "dark"} as="link" href="https://x.com/mintarion">
+            <Button
+              style={{
+                paddingTop: "12px",
+                paddingBottom: "12px",
+                paddingLeft: "13.5px",
+                paddingRight: "13.5px",
+              }}
+              variant={theme === "dark" ? "primary" : "darkGreen"}
+              shape="square"
+              border={theme === "dark"}
+              as="link"
+              href="https://x.com/mintarion"
+            >
               <img src="/img/icons/socials/x.svg" alt="x" />
             </Button>
           </div>
           {session ? (
             <div className={styles.profileInfo}>
-              <Button variant={theme === "dark" ? "outline-darkGreen" : "primary"} shape="square">
-                <IoMdNotificationsOutline color={theme !== "dark" ? "#3D693C" : ""} height="1em" />
+              <Button
+                variant={theme === "dark" ? "outline-darkGreen" : "primary"}
+                shape="square"
+              >
+                <IoMdNotificationsOutline
+                  color={theme !== "dark" ? "#3D693C" : ""}
+                  height="1em"
+                />
               </Button>
               <button
                 ref={profileTriggerRef}
@@ -108,7 +132,10 @@ export const Header: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
           )}
         </div>
         {user && isProfileMenuOpen && (
-          <ProfileContextMenu className={styles.profileMenu} ref={profileContextMenuRef} />
+          <ProfileContextMenu
+            className={styles.profileMenu}
+            ref={profileContextMenuRef}
+          />
         )}
       </div>
     </header>

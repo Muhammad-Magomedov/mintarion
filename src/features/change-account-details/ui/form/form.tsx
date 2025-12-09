@@ -13,8 +13,7 @@ import { useAuth } from "@/shared/hooks/auth";
 import { useUpdateUserOptimistic } from "@/entities/user/model/hooks";
 import styles from "./styles.module.scss";
 
-export interface IChangeAccountDetailsFormProps
-  extends React.FormHTMLAttributes<HTMLFormElement> {}
+export interface IChangeAccountDetailsFormProps extends React.FormHTMLAttributes<HTMLFormElement> {}
 
 export const changeAccountDetailsFormSchema = z.object({
   firstname: z.string().min(1, "First name is required"),
@@ -90,9 +89,12 @@ export const ChangeAccountDetailsForm: React.FC<
       formData.append("avatar", data.avatar[0]);
     }
 
-    if (user?.id) {
+    // Используем userProfile.id если есть, иначе user.id (ID из auth)
+    const userId = userProfile?.id || user?.id;
+
+    if (userId) {
       updateUser(
-        { userId: user.id, data: formData },
+        { userId, data: formData },
         {
           onSuccess(response) {
             if (response.success) {
