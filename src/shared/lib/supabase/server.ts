@@ -1,5 +1,5 @@
-import { createServerClient } from '@supabase/ssr'
-import { cookies } from 'next/headers'
+import { createServerClient } from "@supabase/ssr";
+import { cookies } from "next/headers";
 
 export async function createServerSupabaseClient() {
   const cookieStore = await cookies();
@@ -30,15 +30,14 @@ export function createAdminClient() {
     {
       cookies: {
         getAll() {
-          return []
+          return [];
         },
-        setAll() {
-        },
+        setAll() {},
       },
       auth: {
         autoRefreshToken: false,
-        persistSession: false
-      }
+        persistSession: false,
+      },
     }
-  )
+  );
 }

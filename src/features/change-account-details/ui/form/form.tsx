@@ -32,12 +32,10 @@ export type IChangeAccountDetailsForm = {
 export const ChangeAccountDetailsForm: React.FC<
   IChangeAccountDetailsFormProps
 > = ({ className, ...props }) => {
-  const { user, userProfile, refreshUserProfile, loading } = useAuth();
+  const { user, userProfile } = useAuth();
   const { mutate: updateUser, isPending } = useUpdateUserOptimistic();
 
   const [preview, setPreview] = useState<string | null>(null);
-  const [isInitialized, setIsInitialized] = useState(false);
-
   const {
     register,
     handleSubmit,
@@ -54,40 +52,32 @@ export const ChangeAccountDetailsForm: React.FC<
     },
   });
 
-  // Загружаем данные при монтировании, если их нет
   useEffect(() => {
-    if (!loading && user && !userProfile) {
-      refreshUserProfile();
-    }
-  }, [user, userProfile, loading, refreshUserProfile]);
-
-  // Подставляем данные в форму, когда они доступны
-  useEffect(() => {
-    if (userProfile && !isInitialized) {
+    if (userProfile) {
       const formData = {
         firstname: userProfile.firstName || "",
         lastname: userProfile.lastName || "",
-        email: userProfile.email || user?.email || "",
+        email: userProfile.email || "",
         avatar: undefined as any,
       };
 
+      console.log("Setting form data from userProfile:", formData);
       reset(formData);
-      setIsInitialized(true);
 
       if (userProfile.avatarUrl) {
         setPreview(userProfile.avatarUrl);
       }
-    } else if (user && !userProfile && !loading && !isInitialized) {
-      // Если есть user, но нет userProfile, используем данные из user
+    } else if (user && !userProfile) {
+      // Если есть user, но нет userProfile, используем email из user
+      console.log("Setting form data from user:", user.email);
       reset({
         firstname: "",
         lastname: "",
         email: user.email || "",
         avatar: undefined as any,
       });
-      setIsInitialized(true);
     }
-  }, [userProfile, user, loading, reset, isInitialized]);
+  }, [userProfile, user, reset]);
 
   const avatar = watch("avatar");
 
@@ -102,6 +92,8 @@ export const ChangeAccountDetailsForm: React.FC<
   };
 
   const onSubmit = (data: IChangeAccountDetailsForm) => {
+    console.log("Form submitted with data:", data);
+
     const formData = new FormData();
     formData.append("firstname", data.firstname || "");
     formData.append("lastname", data.lastname || "");
@@ -114,42 +106,65 @@ export const ChangeAccountDetailsForm: React.FC<
     // Используем userProfile.id если есть, иначе user.id (ID из auth)
     const userId = userProfile?.id || user?.id;
 
-    if (userId) {
-      updateUser(
-        { userId, data: formData },
-        {
-          onSuccess(response) {
-            if (response.success) {
-              toast.success("Account details updated!");
-              // Обновляем форму с новыми данными после успешного сохранения
-              reset({
-                firstname: response.user?.first_name || "",
-                lastname: response.user?.last_name || "",
-                email: response.user?.email || "",
-                avatar: undefined as any,
-              });
-              if (response.user?.avatar_url) {
-                setPreview(response.user.avatar_url);
-              }
-            } else {
-              toast.error(response.error || "Error during update");
-            }
-          },
-          onError(error) {
-            toast.error("Error during change account details");
-            console.error("Change account details error:", error);
-          },
-          onSettled() {},
-        }
-      );
+    console.log("User ID:", userId, "userProfile:", userProfile, "user:", user);
+
+    if (!userId) {
+      toast.error("User ID not found. Please try logging in again.");
+      console.error("No user ID available");
+      return;
     }
+
+    console.log("Calling updateUser with userId:", userId);
+
+    updateUser(
+      { userId, data: formData },
+      {
+        onSuccess(response) {
+          console.log("Update success response:", response);
+          if (response.success) {
+            toast.success("Account details updated!");
+            // Обновляем форму с новыми данными после успешного сохранения
+            reset({
+              firstname: response.user?.first_name || "",
+              lastname: response.user?.last_name || "",
+              email: response.user?.email || "",
+              avatar: undefined as any,
+            });
+            if (response.user?.avatar_url) {
+              setPreview(response.user.avatar_url);
+            }
+          } else {
+            toast.error(response.error || "Error during update");
+          }
+        },
+        onError(error) {
+          console.error("Update error:", error);
+          toast.error("Error during change account details");
+        },
+        onSettled() {
+          console.log("Update settled");
+        },
+      }
+    );
+  };
+
+  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log("Form submit handler called");
+    handleSubmit(onSubmit, (errors) => {
+      console.error("Form validation errors:", errors);
+      // Показываем первую ошибку валидации
+      const firstError = Object.values(errors)[0];
+      if (firstError?.message) {
+        toast.error(firstError.message);
+      }
+    })(e);
   };
 
   return (
     <form
       className={cn(styles.form, className)}
-      // @ts-ignore
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={handleFormSubmit}
       {...props}
     >
       <div className={styles.column}>
@@ -197,7 +212,15 @@ export const ChangeAccountDetailsForm: React.FC<
         </div>
 
         <div className={styles.btnList}>
-          <Button className={styles.btn} type="submit" disabled={isPending}>
+          <Button
+            className={styles.btn}
+            type="submit"
+            disabled={isPending}
+            onClick={(e) => {
+              console.log("Save button clicked");
+              // Не предотвращаем дефолтное поведение, форма сама обработает
+            }}
+          >
             {isPending ? "Saving..." : "Save All Changes"}
           </Button>
           <Button

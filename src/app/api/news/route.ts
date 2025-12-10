@@ -20,7 +20,7 @@ export async function GET(req: NextRequest) {
     const url = `${process.env.NEXT_PUBLIC_EXTERNAL_API_URL}/news`;
     const response = await axios.post<IGetNewsResponse>(url, {
       ...data,
-      limit: 50
+      limit: 50,
     });
 
     return NextResponse.json(

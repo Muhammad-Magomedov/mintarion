@@ -1,10 +1,10 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { createServerClient } from '@supabase/ssr';
+import { NextRequest, NextResponse } from "next/server";
+import { createServerClient } from "@supabase/ssr";
 
 export async function POST(request: NextRequest) {
   try {
     let response = NextResponse.json(
-      { message: 'Signed out successfully' },
+      { message: "Signed out successfully" },
       { status: 200 }
     );
 
@@ -14,12 +14,12 @@ export async function POST(request: NextRequest) {
       {
         cookies: {
           getAll() {
-            return request.cookies.getAll()
+            return request.cookies.getAll();
           },
           setAll(cookiesToSet) {
             cookiesToSet.forEach(({ name, value, options }) => {
-              response.cookies.set(name, value, options)
-            })
+              response.cookies.set(name, value, options);
+            });
           },
         },
       }
@@ -28,19 +28,18 @@ export async function POST(request: NextRequest) {
     const { error } = await supabase.auth.signOut();
 
     if (error) {
-      console.error('Sign out error:', error);
+      console.error("Sign out error:", error);
       return NextResponse.json(
-        { error: 'Failed to sign out' },
+        { error: "Failed to sign out" },
         { status: 500 }
       );
     }
 
     return response;
-
   } catch (error) {
-    console.error('Error in sign-out:', error);
+    console.error("Error in sign-out:", error);
     return NextResponse.json(
-      { error: 'Internal server error' },
+      { error: "Internal server error" },
       { status: 500 }
     );
   }

@@ -1,5 +1,5 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { createServerClient } from '@supabase/ssr';
+import { NextRequest, NextResponse } from "next/server";
+import { createServerClient } from "@supabase/ssr";
 
 export async function POST(request: NextRequest) {
   try {
@@ -7,15 +7,15 @@ export async function POST(request: NextRequest) {
 
     if (!email || !password) {
       return NextResponse.json(
-        { error: 'Email and password are required' },
+        { error: "Email and password are required" },
         { status: 400 }
       );
     }
 
     const response = NextResponse.json(
-      { 
-        message: 'Signed in successfully',
-        user: null
+      {
+        message: "Signed in successfully",
+        user: null,
       },
       { status: 200 }
     );
@@ -26,44 +26,41 @@ export async function POST(request: NextRequest) {
       {
         cookies: {
           getAll() {
-            return request.cookies.getAll()
+            return request.cookies.getAll();
           },
           setAll(cookiesToSet) {
             cookiesToSet.forEach(({ name, value, options }) => {
               response.cookies.set(name, value, {
                 ...options,
-                httpOnly: false
-              })
-            })
+                httpOnly: false,
+              });
+            });
           },
         },
       }
     );
 
-
-    const { data: authData, error: signInError } = await supabase.auth.signInWithPassword({
-      email,
-      password
-    });
+    const { data: authData, error: signInError } =
+      await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
 
     if (signInError) {
-      console.error('Supabase signin error:', signInError);
-      
-      let errorMessage = 'Invalid email or password';
-      if (signInError.message.includes('Invalid login credentials')) {
-        errorMessage = 'Invalid email or password';
-      } else if (signInError.message.includes('Email not confirmed')) {
-        errorMessage = 'Please verify your email address';
+      console.error("Supabase signin error:", signInError);
+
+      let errorMessage = "Invalid email or password";
+      if (signInError.message.includes("Invalid login credentials")) {
+        errorMessage = "Invalid email or password";
+      } else if (signInError.message.includes("Email not confirmed")) {
+        errorMessage = "Please verify your email address";
       }
-      
-      return NextResponse.json(
-        { error: errorMessage },
-        { status: 401 }
-      );
+
+      return NextResponse.json({ error: errorMessage }, { status: 401 });
     }
 
     // response = NextResponse.json(
-    //   { 
+    //   {
     //     message: 'Signed in successfully',
     //     user: {
     //       id: authData.user.id,
@@ -74,11 +71,10 @@ export async function POST(request: NextRequest) {
     // );
 
     return response;
-
   } catch (error) {
-    console.error('Error in sign-in:', error);
+    console.error("Error in sign-in:", error);
     return NextResponse.json(
-      { error: 'Internal server error' },
+      { error: "Internal server error" },
       { status: 500 }
     );
   }

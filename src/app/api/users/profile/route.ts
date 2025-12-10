@@ -1,32 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createServerClient } from "@supabase/ssr";
-import { createAdminClient } from "@/shared/lib/supabase/server";
-import type { IUserProfile } from "@/shared/types/entities/user";
+import { createServerSupabaseClient } from "@/shared/lib/supabase/server";
 import camelcaseKeys from "camelcase-keys";
 
-export async function GET(req: NextRequest) {
+export async function GET(req: NextRequest): Promise<NextResponse> {
   try {
-    let response = NextResponse.next();
-
-    const supabase = createServerClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-      {
-        cookies: {
-          getAll() {
-            return req.cookies.getAll();
-          },
-          setAll(cookiesToSet) {
-            cookiesToSet.forEach(({ name, value, options }) => {
-              response.cookies.set(name, value, {
-                ...options,
-                httpOnly: false,
-              });
-            });
-          },
-        },
-      }
-    );
+    const supabase = await createServerSupabaseClient();
 
     const {
       data: { user },
@@ -34,80 +12,51 @@ export async function GET(req: NextRequest) {
     } = await supabase.auth.getUser();
 
     if (authError || !user) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      return NextResponse.json(
+        { data: null, error: "Unauthorized" },
+        { status: 401 }
+      );
     }
 
-    // Получаем профиль пользователя из таблицы users
-    const { data: userRecord, error: userError } = await supabase
+    // Запрашиваем профиль напрямую из таблицы users
+    const { data, error } = await supabase
       .from("users")
       .select("*")
       .eq("id", user.id)
       .single();
 
-    if (userError || !userRecord) {
-      // Если пользователя нет в таблице users, создаем базовый профиль через Admin Client
-      const supabaseAdmin = createAdminClient();
-
-      const nameParts = user.user_metadata?.name?.split(" ") || [];
-      const firstName = nameParts[0] || "";
-      const lastName = nameParts.slice(1).join(" ") || "";
-
-      const { data: newUser, error: createError } = await supabaseAdmin
-        .from("users")
-        .insert({
-          id: user.id,
-          email: user.email,
-          first_name: firstName,
-          last_name: lastName,
-          avatar_url: user.user_metadata?.avatar_url || null,
-        })
-        .select()
-        .single();
-
-      if (createError) {
-        console.error("Error creating user profile:", createError);
-        return NextResponse.json(
-          { error: "Failed to create user profile" },
-          { status: 500 }
-        );
-      }
-
-      const finalResponse = NextResponse.json(
-        { data: camelcaseKeys(newUser) },
-        { status: 200 }
-      );
-
-      // Копируем cookies из промежуточного response
-      response.cookies.getAll().forEach(({ name, value }) => {
-        finalResponse.cookies.set(name, value, {
-          httpOnly: false,
-          sameSite: "lax" as const,
-          path: "/",
+    if (error) {
+      // Если пользователя нет в таблице, возвращаем базовый профиль из auth
+      if (error.code === "PGRST116") {
+        return NextResponse.json({
+          data: {
+            id: user.id,
+            email: user.email || "",
+            firstName: user.user_metadata?.name?.split(" ")[0] || "",
+            lastName:
+              user.user_metadata?.name?.split(" ").slice(1).join(" ") || "",
+            avatarUrl: user.user_metadata?.avatar_url || null,
+          },
+          error: null,
         });
-      });
-
-      return finalResponse;
+      }
+      return NextResponse.json(
+        { data: null, error: error.message },
+        { status: 500 }
+      );
     }
 
-    const finalResponse = NextResponse.json(
-      { data: camelcaseKeys(userRecord) },
-      { status: 200 }
-    );
-
-    // Копируем cookies из промежуточного response
-    response.cookies.getAll().forEach(({ name, value }) => {
-      finalResponse.cookies.set(name, value, {
-        httpOnly: false,
-        sameSite: "lax" as const,
-        path: "/",
-      });
+    return NextResponse.json({
+      data: data ? camelcaseKeys(data) : null,
+      error: null,
     });
-
-    return finalResponse;
   } catch (error) {
-    console.error("Error fetching user profile:", error);
+    console.error("Error getting user profile:", error);
     return NextResponse.json(
-      { error: "Internal server error" },
+      {
+        data: null,
+        error: error instanceof Error ? error.message : "Unknown error",
+      },
       { status: 500 }
     );
   }
