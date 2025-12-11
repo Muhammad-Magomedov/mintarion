@@ -59,6 +59,7 @@ export default function CreateArticle() {
   const [fileName, setFileName] = useState("");
   const [selectedColor, setSelectedColor] = useState("#000000");
   const [selectedBgColor, setSelectedBgColor] = useState("#ffffff");
+  const [imgSrc, setImgSrc] = useState("");
   const editorRef = useRef(null);
   const fileInputRef = useRef(null);
   const colorPickerRef = useRef(null);
@@ -78,7 +79,7 @@ export default function CreateArticle() {
   const handlePublish = () => {
     const data: IPostArticlePayload = {
       category: "",
-      imgSrc: "",
+      imgSrc: imgSrc,
       title,
       content,
       href: uuidv4(),
@@ -179,7 +180,7 @@ export default function CreateArticle() {
           img.style.maxWidth = "100%";
           img.style.height = "auto";
           img.style.cursor = "pointer";
-
+          setImgSrc(img.src);
           // Make image resizable
           img.onclick = () => {
             const newWidth = prompt(

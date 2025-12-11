@@ -89,7 +89,7 @@ export const ArticleCard: React.FC<IArticleCardProps> = ({
   const wrapperCn = cn(styles.wrapper, variants({ variant, size }), className);
 
   // Используем заглушку, если изображение не указано
-  const imageSrc = imgSrc || "/img/article/1.png";
+  const imageSrc = imgSrc || "/img/article/3.png";
 
   const element = (
     <div className={cn(styles.content, styles[orientation], contentClassname)}>

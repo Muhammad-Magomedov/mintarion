@@ -67,7 +67,7 @@ export const CreatorDashboardArticlesCard: React.FC<
             <div className={styles.listItemLeft}>
               <img
                 className={styles.listItemImage}
-                src={imgSrc || "/img/article/1.png"}
+                src={imgSrc || "/img/article/3.png"}
                 alt=""
               />
               <div className={styles.listItemInfo}>
