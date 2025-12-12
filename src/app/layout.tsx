@@ -12,15 +12,18 @@ import "@/shared/styles/main.scss";
 const schibstedGrotesk = Schibsted_Grotesk({
   variable: "--font-schibsted-grotesk",
   subsets: ["latin"],
-  weight: ["400", "500", "600"]
-})
+  weight: ["400", "500", "600"],
+});
 
 export const metadata: Metadata = {
   title: "MINTARION",
   description: "",
   icons: {
-    icon: "./favicon.png"
-  }
+    icon: "./favicon.png",
+  },
+  other: {
+    cryptomus: "80621f2a",
+  },
 };
 
 export default function RootLayout({
@@ -30,19 +33,28 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${schibstedGrotesk.variable} antialiased`}
-      >
+      <head>
+        <meta name="cryptomus" content="80621f2a" />
+      </head>
+      <body className={`${schibstedGrotesk.variable} antialiased`}>
         <QueryProvider>
           <NextAuthSessionProvider>
             <AuthProvider>
               <Toaster />
               <MobileBlock>
-                <MainLayout routes={[
-                  "/sign-up", "/sign-in",
-                  "/chart", "/news", "/tools", "/articles", "/learning", "/exchange",
-                  "/account"
-                ]}>
+                <MainLayout
+                  routes={[
+                    "/sign-up",
+                    "/sign-in",
+                    "/chart",
+                    "/news",
+                    "/tools",
+                    "/articles",
+                    "/learning",
+                    "/exchange",
+                    "/account",
+                  ]}
+                >
                   {children}
                 </MainLayout>
               </MobileBlock>
