@@ -76,13 +76,38 @@ export default function CreateArticle() {
   }, [title]);
 
   const handlePublish = () => {
+    // Получаем актуальный контент из редактора
+    const currentContent = editorRef.current?.innerHTML || content;
+
+    // Извлекаем первое изображение из контента
+    let extractedImgSrc = "";
+
+    // Пробуем найти изображение через DOM парсинг (если editorRef доступен)
+    if (editorRef.current) {
+      const firstImg = editorRef.current.querySelector("img");
+      if (firstImg && firstImg.src && !firstImg.src.startsWith("data:")) {
+        // Используем только URL из Supabase Storage, не base64
+        extractedImgSrc = firstImg.src;
+      }
+    }
+
+    // Если не нашли через DOM, пробуем регулярное выражение
+    if (!extractedImgSrc && currentContent) {
+      const imgMatch = currentContent.match(
+        /<img[^>]+src\s*=\s*["']([^"']+)["'][^>]*>/i
+      );
+      if (imgMatch && imgMatch[1] && !imgMatch[1].startsWith("data:")) {
+        extractedImgSrc = imgMatch[1];
+      }
+    }
+
     const authorId = userProfile?.id || user?.id || "";
 
     const data: IPostArticlePayload = {
       category: "",
-      imgSrc: "",
+      imgSrc: extractedImgSrc,
       title,
-      content,
+      content: currentContent,
       href: uuidv4(),
       excerpt: subtitle,
       author: {
@@ -93,10 +118,12 @@ export default function CreateArticle() {
       },
     };
 
-    console.log("Publishing article with author:", {
-      id: authorId,
-      userProfileId: userProfile?.id,
-      userId: user?.id,
+    console.log("Publishing article:", {
+      authorId,
+      imgSrc: extractedImgSrc
+        ? `${extractedImgSrc.substring(0, 50)}...`
+        : "empty",
+      contentLength: currentContent?.length || 0,
     });
 
     articlesApi
