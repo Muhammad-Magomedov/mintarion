@@ -77,69 +77,13 @@ export default function CreateArticle() {
   }, [title]);
 
   const handlePublish = () => {
-    // Принудительно синхронизируем контент из редактора перед публикацией
-    if (editorRef.current) {
-      const editorContent = editorRef.current.innerHTML;
-      if (editorContent !== content) {
-        setContent(editorContent);
-      }
-    }
-
-    // Получаем актуальный контент из редактора
-    const currentContent = editorRef.current?.innerHTML || content;
-
-    console.log("=== PUBLISH DEBUG ===");
-    console.log("editorRef.current exists:", !!editorRef.current);
-    console.log("editorRef.current.innerHTML:", editorRef.current?.innerHTML);
-    console.log(
-      "editorRef.current.innerHTML length:",
-      editorRef.current?.innerHTML?.length || 0
-    );
-    console.log("content state:", content);
-    console.log("content state length:", content?.length || 0);
-    console.log("currentContent:", currentContent);
-    console.log("currentContent length:", currentContent?.length || 0);
-
-    // Проверяем, что контент не пустой
-    if (
-      !currentContent ||
-      currentContent.trim() === "" ||
-      currentContent === "<br>" ||
-      currentContent === "<p><br></p>"
-    ) {
-      toast.error("Article content cannot be empty");
-      return;
-    }
-
-    // Извлекаем первое изображение из контента
-    let extractedImgSrc = "";
-
-    // Пробуем найти изображение через DOM парсинг (если editorRef доступен)
-    if (editorRef.current) {
-      const firstImg = editorRef.current.querySelector("img");
-      if (firstImg && firstImg.src && !firstImg.src.startsWith("data:")) {
-        // Используем только URL из Supabase Storage, не base64
-        extractedImgSrc = firstImg.src;
-      }
-    }
-
-    // Если не нашли через DOM, пробуем регулярное выражение
-    if (!extractedImgSrc && currentContent) {
-      const imgMatch = currentContent.match(
-        /<img[^>]+src\s*=\s*["']([^"']+)["'][^>]*>/i
-      );
-      if (imgMatch && imgMatch[1] && !imgMatch[1].startsWith("data:")) {
-        extractedImgSrc = imgMatch[1];
-      }
-    }
-
     const authorId = userProfile?.id || user?.id || "";
 
     const data: IPostArticlePayload = {
       category: "",
-      imgSrc: extractedImgSrc,
+      imgSrc: imgSrc,
       title,
-      content: currentContent,
+      content,
       href: uuidv4(),
       excerpt: subtitle,
       author: {
@@ -149,15 +93,6 @@ export default function CreateArticle() {
         avatarUrl: userProfile?.avatarUrl ?? "",
       },
     };
-
-    console.log("Publishing article:", {
-      authorId,
-      imgSrc: extractedImgSrc
-        ? `${extractedImgSrc.substring(0, 50)}...`
-        : "empty",
-      contentLength: currentContent?.length || 0,
-      contentPreview: currentContent?.substring(0, 200),
-    });
 
     articlesApi
       .createArticle(data)
@@ -247,7 +182,7 @@ export default function CreateArticle() {
           img.style.maxWidth = "100%";
           img.style.height = "auto";
           img.style.cursor = "pointer";
-
+          setImgSrc(img.src);
           // Make image resizable
           img.onclick = () => {
             const newWidth = prompt(
@@ -368,7 +303,7 @@ export default function CreateArticle() {
   const loadDocument = useCallback(() => {
     fileInputRef.current?.click();
   }, []);
-
+  console.log(fileName, "fileName");
   const handleFileLoad = useCallback(
     (event) => {
       const file = event.target.files[0];
