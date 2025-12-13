@@ -1,62 +1,235 @@
 .main {
-    width: 100%;
-    min-height: 100vh;
-    background-color: #002105;
-    background-image: url('/img/pages/home/main-bg-4x.png');
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-    
-    font-family: 'Roobert TRIAL', sans-serif;
-    font-weight: 300;
-    color: #fff;
+  width: 100%;
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+  background-color: #000000;
+  // background-image будет добавлен на втором этапе анимации
+  // background-color: #002105;
+  // background-image: url('/img/pages/home/main-bg-4x.png');
+  // background-repeat: no-repeat;
+  // background-position: center center;
+  // background-size: cover;
+
+  font-family: "Roobert TRIAL", sans-serif;
+  font-weight: 300;
+  color: #fff;
+}
+
+// Фон появляется на втором этапе с анимацией
+.mainWithBackground {
+  background-image: url("/background.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  animation: fadeInBackground 0.8s ease-out;
+}
+
+@keyframes fadeInBackground {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+// Этап 1: Темный экран с градиентом по бокам
+.initialScreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #000000;
+  z-index: 100;
+}
+
+.sideGradients {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 200px;
+    background: linear-gradient(
+      to right,
+      rgba(39, 174, 96, 0.1) 0%,
+      transparent 100%
+    );
+  }
+
+  &::before {
+    left: 0;
+  }
+
+  &::after {
+    right: 0;
+    background: linear-gradient(
+      to left,
+      rgba(39, 174, 96, 0.1) 0%,
+      transparent 100%
+    );
+  }
+}
+
+// Этап 2: Логотип и зеленый блюр
+.logoContainer {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 101;
+}
+
+// Зеленый блюр - первый блок (blur 400px)
+.greenBlur1 {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 50vw;
+  height: 100vh;
+  background: #27ae60;
+  filter: blur(400px);
+  z-index: 99;
+  pointer-events: none;
+}
+
+// Зеленый блюр - второй блок (blur 600px)
+.greenBlur2 {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 50vw;
+  height: 100vh;
+  background: #27ae60;
+  filter: blur(600px);
+  z-index: 98;
+  pointer-events: none;
 }
 .container {
-    margin: 0 auto;
-    width: 95.4vw;
+  margin: 0 auto;
+  width: 95.4vw;
 }
 .content {
-    padding: 21px 0;
+  padding: 21px 0;
+  position: relative;
+}
+
+.body {
+  position: relative;
 }
 .headerContent {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 .logo {
-    width: 157px;
+  width: 157px;
 }
 .socials {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
 }
 .box {
-    margin-top: 27vh;
-    width: 652px;
-    display: inline-flex;
-    flex-direction: column;
-    gap: 30px;
+  margin-top: 27vh;
+  width: 652px;
+  display: inline-flex;
+  flex-direction: column;
+  gap: 30px;
 }
 .title {
-    font-size: 90px;
-    color: #F5F5F5;
-    line-height: 100%;
+  font-size: 64px;
+  color: #f5f5f5;
+  line-height: 100%;
 }
 .desc {
-    width: 74%;
-    font-size: 20px;
-    color: #D6D6D6;
+  font-weight: 700;
+  width: 74%;
+  font-size: 16px;
+  color: #d6d6d6;
 }
-.mainBtn > * {
-    padding: 20px 50px !important;
-    font-family: 'Roobert TRIAL', sans-serif !important;
-    font-size: 22px;
-    line-height: 100%;
+.author {
+  font-size: 16px;
+  font-style: italic;
+}
+.exampleImage {
+  position: absolute;
+  height: 743px;
+  right: -3%;
+  top: 10%;
+  z-index: 0;
+  pointer-events: none;
+}
+.mainBtn {
+  padding: 20px 50px !important;
+  font-family: "Roobert TRIAL", sans-serif !important;
+  font-size: 20px;
+  line-height: 100%;
+  font-weight: 500;
+  background-color: linear-gradient(90deg, #95fb95 0%, #30532f 100%);
+  box-shadow: 0px 20px 20px #26864e4d;
+  border: 1px solid linear-gradient(90deg, #95fb95 0%, #30532f 100%);
+}
+.usersOnline {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.greenDot {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+.usersOnlineCount {
+  font-size: 16px;
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  gap: 4px;
+}
+.usersOnlineIcon {
+  font-size: 16px;
+  color: #95fb95;
+}
+.usersOnlineText {
+  font-size: 16px;
+  font-weight: 400;
+  opacity: 0.5;
+}
+
+.mainPageFooter {
+  color: #cccccc;
+  position: fixed;
+  bottom: 40px;
+  left: 6%;
+  transform: translateX(-10%);
+  display: flex;
+  gap: 10px;
+  z-index: 10;
+
+  div {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+
+    &:hover {
+      color: #fff;
+    }
+  }
 }
 
 @media (max-width: 1600px) {
-    .mainBtn > * {
-        padding: 20px 40px !important;
-    }
+  .mainBtn {
+    padding: 20px 40px !important;
+  }
 }

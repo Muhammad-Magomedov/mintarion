@@ -41,18 +41,15 @@ export async function POST(request: NextRequest) {
     }
 
     // Генерируем уникальное имя файла
-    const fileExt = file.name.split(".").pop() || "jpg";
+    const fileExt = file.name.split(".").pop();
     const fileName = `${user.id}-${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
     const filePath = `articles/${fileName}`;
-
-    // Конвертируем File в ArrayBuffer для загрузки
-    const arrayBuffer = await file.arrayBuffer();
 
     // Загружаем файл в Supabase Storage
     // Используем admin client для загрузки
     const { error: uploadError } = await adminSupabase.storage
       .from("articles")
-      .upload(filePath, arrayBuffer, {
+      .upload(filePath, file, {
         cacheControl: "3600",
         upsert: false,
         contentType: file.type,
