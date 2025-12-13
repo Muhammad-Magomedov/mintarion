@@ -60,20 +60,83 @@ export async function POST(request: NextRequest) {
   try {
     const body: IArticle = await request.json();
 
-    console.log(
-      "Creating article with imgSrc:",
-      body.imgSrc ? `${body.imgSrc.substring(0, 100)}...` : "empty"
-    );
-    console.log("Body keys:", Object.keys(body));
-    console.log("imgSrc type:", typeof body.imgSrc);
-    console.log("imgSrc length:", body.imgSrc?.length || 0);
+    const { createServerSupabaseClient } =
+      await import("@/shared/lib/supabase/server");
+    const authSupabase = await createServerSupabaseClient();
 
-    // if (!body.title || !body.href || !body.author) {
-    //   return NextResponse.json(
-    //     { error: 'title, href, author required' },
-    //     { status: 400 }
-    //   );
-    // }
+    const {
+      data: { user: authUser },
+      error: authError,
+    } = await authSupabase.auth.getUser();
+
+    if (authError || !authUser) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    console.log("Auth user ID:", authUser.id);
+    console.log("Auth user email:", authUser.email);
+
+    // Ищем пользователя в таблице users по ID из auth
+    let { data: userRecord, error: userRecordError } = await supabase
+      .from("users")
+      .select("id, email")
+      .eq("id", authUser.id)
+      .single();
+
+    // Если пользователь не найден по ID, пробуем найти по email
+    if (userRecordError && authUser.email) {
+      console.log("User not found by ID, searching by email:", authUser.email);
+      const { data: userByEmail, error: emailError } = await supabase
+        .from("users")
+        .select("id, email")
+        .eq("email", authUser.email.toLowerCase())
+        .single();
+
+      if (!emailError && userByEmail) {
+        userRecord = userByEmail;
+        console.log("Found user by email, ID:", userByEmail.id);
+      }
+    }
+
+    // Если пользователь все еще не найден, создаем запись в таблице users
+    if (!userRecord) {
+      console.log("Creating new user record in users table");
+      const { data: newUser, error: createError } = await supabase
+        .from("users")
+        .insert({
+          id: authUser.id,
+          email: authUser.email || "",
+          first_name:
+            authUser.user_metadata?.name?.split(" ")[0] ||
+            body.author?.firstName ||
+            "",
+          last_name:
+            authUser.user_metadata?.name?.split(" ").slice(1).join(" ") ||
+            body.author?.lastName ||
+            "",
+          avatar_url:
+            authUser.user_metadata?.avatar_url ||
+            body.author?.avatarUrl ||
+            null,
+        })
+        .select()
+        .single();
+
+      if (createError) {
+        console.error("Error creating user record:", createError);
+        return NextResponse.json(
+          { error: "Failed to create user record" },
+          { status: 500 }
+        );
+      }
+
+      userRecord = newUser;
+      console.log("Created user record, ID:", newUser.id);
+    }
+
+    // Используем правильный ID из таблицы users
+    const correctAuthorId = userRecord.id;
+    console.log("Using author ID:", correctAuthorId);
 
     const { data, error } = await supabase
       .from("posts")
@@ -85,11 +148,12 @@ export async function POST(request: NextRequest) {
         content: body.content,
         type: "article",
         raw: body.author ?? {},
-        author: body.author?.id,
+        author: correctAuthorId, // Используем правильный ID из таблицы users
       })
       .select()
       .single();
 
+    console.log("Insert result - author:", data?.author);
     console.log("Insert result - img_src:", data?.img_src);
 
     if (error) {

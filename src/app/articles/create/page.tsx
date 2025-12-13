@@ -59,7 +59,6 @@ export default function CreateArticle() {
   const [fileName, setFileName] = useState("");
   const [selectedColor, setSelectedColor] = useState("#000000");
   const [selectedBgColor, setSelectedBgColor] = useState("#ffffff");
-  const [imgSrc, setImgSrc] = useState("");
   const editorRef = useRef(null);
   const fileInputRef = useRef(null);
   const colorPickerRef = useRef(null);
@@ -77,33 +76,28 @@ export default function CreateArticle() {
   }, [title]);
 
   const handlePublish = () => {
-    // Получаем актуальный контент из редактора
-    const currentContent = editorRef.current?.innerHTML || content;
-
-    // Если imgSrc не установлен, пытаемся извлечь из контента
-    let finalImgSrc = imgSrc;
-    if (!finalImgSrc && editorRef.current) {
-      const firstImg = editorRef.current.querySelector("img");
-      if (firstImg && firstImg.src && !firstImg.src.startsWith("data:")) {
-        // Используем только URL из Supabase Storage, не base64
-        finalImgSrc = firstImg.src;
-      }
-    }
+    const authorId = userProfile?.id || user?.id || "";
 
     const data: IPostArticlePayload = {
       category: "",
-      imgSrc: finalImgSrc,
+      imgSrc: "",
       title,
-      content: currentContent,
+      content,
       href: uuidv4(),
       excerpt: subtitle,
       author: {
-        id: user?.id ?? "",
+        id: authorId,
         firstName: userProfile?.firstName ?? "",
         lastName: userProfile?.lastName ?? "",
-        avatarUrl: "",
+        avatarUrl: userProfile?.avatarUrl ?? "",
       },
     };
+
+    console.log("Publishing article with author:", {
+      id: authorId,
+      userProfileId: userProfile?.id,
+      userId: user?.id,
+    });
 
     articlesApi
       .createArticle(data)
@@ -177,100 +171,49 @@ export default function CreateArticle() {
   );
 
   // Custom handlers
-  const handleImageInsert = useCallback(async () => {
+  const handleImageInsert = useCallback(() => {
     const input = document.createElement("input");
     input.setAttribute("type", "file");
     input.setAttribute("accept", "image/*");
     input.click();
 
-    input.onchange = async () => {
+    input.onchange = () => {
       const file = input.files[0];
       if (file) {
-        // Показываем временный превью через base64 для быстрого отображения
         const reader = new FileReader();
-        reader.onload = async () => {
-          // Создаем временный img с base64 для превью
-          const tempImg = document.createElement("img");
-          tempImg.src = reader.result as string;
-          tempImg.style.maxWidth = "100%";
-          tempImg.style.height = "auto";
-          tempImg.style.cursor = "pointer";
-          tempImg.style.opacity = "0.5"; // Показываем что идет загрузка
+        reader.onload = () => {
+          const img = document.createElement("img");
+          img.src = reader.result;
+          img.style.maxWidth = "100%";
+          img.style.height = "auto";
+          img.style.cursor = "pointer";
 
-          // Вставляем временное изображение
+          // Make image resizable
+          img.onclick = () => {
+            const newWidth = prompt(
+              "Enter width in pixels (or % for percentage):",
+              "300"
+            );
+            if (newWidth) {
+              img.style.width = newWidth.includes("%")
+                ? newWidth
+                : `${newWidth}px`;
+            }
+          };
+
           const selection = window.getSelection();
           if (selection.rangeCount > 0) {
             const range = selection.getRangeAt(0);
             range.deleteContents();
-            range.insertNode(tempImg);
+            range.insertNode(img);
             range.collapse(false);
           }
-
-          try {
-            // Загружаем файл на сервер
-            const formData = new FormData();
-            formData.append("file", file);
-
-            const response = await fetch("/api/articles/upload-image", {
-              method: "POST",
-              body: formData,
-            });
-
-            if (!response.ok) {
-              const error = await response.json();
-              throw new Error(error.error || "Failed to upload image");
-            }
-
-            const { url } = await response.json();
-
-            // Заменяем временное изображение на загруженное
-            const img = document.createElement("img");
-            img.src = url;
-            img.style.maxWidth = "100%";
-            img.style.height = "auto";
-            img.style.cursor = "pointer";
-            img.style.opacity = "1";
-
-            // Сохраняем URL первого изображения для imgSrc
-            if (!imgSrc) {
-              setImgSrc(url);
-            }
-
-            // Make image resizable
-            img.onclick = () => {
-              const newWidth = prompt(
-                "Enter width in pixels (or % for percentage):",
-                "300"
-              );
-              if (newWidth) {
-                img.style.width = newWidth.includes("%")
-                  ? newWidth
-                  : `${newWidth}px`;
-              }
-            };
-
-            // Заменяем временное изображение
-            if (tempImg.parentNode) {
-              tempImg.parentNode.replaceChild(img, tempImg);
-            }
-
-            setTimeout(handleContentChange, 10);
-            toast.success("Image uploaded successfully");
-          } catch (error) {
-            console.error("Error uploading image:", error);
-            toast.error(
-              error instanceof Error ? error.message : "Failed to upload image"
-            );
-            // Удаляем временное изображение при ошибке
-            if (tempImg.parentNode) {
-              tempImg.parentNode.removeChild(tempImg);
-            }
-          }
+          setTimeout(handleContentChange, 10);
         };
         reader.readAsDataURL(file);
       }
     };
-  }, [handleContentChange, imgSrc]);
+  }, [handleContentChange]);
 
   const handleVideoInsert = useCallback(() => {
     const url = prompt("Enter video URL (YouTube, Vimeo, etc.):");
@@ -365,7 +308,7 @@ export default function CreateArticle() {
   const loadDocument = useCallback(() => {
     fileInputRef.current?.click();
   }, []);
-
+  console.log(fileName, "fileName");
   const handleFileLoad = useCallback(
     (event) => {
       const file = event.target.files[0];
