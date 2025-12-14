@@ -84,36 +84,11 @@
 .logoContainer {
   position: fixed;
   top: 50%;
-  left: 50%;
+  left: 45%;
   transform: translate(-50%, -50%);
   z-index: 101;
 }
 
-// Зеленый блюр - первый блок (blur 400px)
-.greenBlur1 {
-  position: fixed;
-  top: 0;
-  right: 0;
-  width: 50vw;
-  height: 100vh;
-  background: #27ae60;
-  filter: blur(400px);
-  z-index: 99;
-  pointer-events: none;
-}
-
-// Зеленый блюр - второй блок (blur 600px)
-.greenBlur2 {
-  position: fixed;
-  top: 0;
-  right: 0;
-  width: 50vw;
-  height: 100vh;
-  background: #27ae60;
-  filter: blur(600px);
-  z-index: 98;
-  pointer-events: none;
-}
 .container {
   margin: 0 auto;
   width: 95.4vw;
