@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     icon: "./favicon.png",
   },
   other: {
-    cryptomus: "80621f2a",
+    cryptomus: "5048fc73",
   },
 };
 
@@ -34,7 +34,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <meta name="cryptomus" content="80621f2a" />
+        <meta name="cryptomus" content="5048fc73" />
       </head>
       <body className={`${schibstedGrotesk.variable} antialiased`}>
         <QueryProvider>
