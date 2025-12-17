@@ -1,0 +1,70 @@
+.page {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #000000;
+  color: #fff;
+}
+
+.header {
+  padding: 20px 25px;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  background: #181b19;
+}
+
+.title {
+  text-align: center;
+  color: #fff;
+  font-size: 14px;
+  flex: 1 0 0;
+}
+
+.footerBackground {
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.footerBackgroundTwo {
+  object-fit: cover;
+  position: absolute;
+  top: 40%;
+  left: 0;
+}
+.sidebar {
+  position: fixed;
+  left: 0;
+  width: 90px;
+  height: 100vh;
+  background-color: #0d0d0d;
+}
+.content {
+  position: relative;
+  font-family: "Schibsted Grotesk";
+  height: 100%;
+  margin-left: 90px;
+  line-height: 1.6;
+  padding: 40px 15px;
+  font-size: 14px;
+  color: #fff;
+  background-color: #111111;
+
+  ul {
+    margin-bottom: 15px;
+    padding-left: 30px;
+    list-style-type: disc;
+  }
+
+  ol {
+    margin-bottom: 15px;
+    padding-left: 30px;
+    list-style-type: decimal;
+  }
+
+  li {
+    margin-bottom: 8px;
+    display: list-item;
+  }
+}

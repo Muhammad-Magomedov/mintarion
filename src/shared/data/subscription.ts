@@ -7,12 +7,9 @@ export const subscriptionPlans: ISubscriptionPlan[] = [
     pricePerMonth: 77.77,
     pricePerYear: 839.92,
     features: [
-      "Personalized newsfeed with AI summaries",
-      "Weekly project digests",
-      "Basic filters & pre-made screeners",
-      "Charts and core metrics",
-      "Full access to Copilot (AI Assistant)",
-      "Advanced reviews & research",
+      "Full access to MintaLab AI Copilot",
+      "Advanced review & weekly digests",
+      "Personalized newsfeed",
     ],
   },
 ];
