@@ -6,7 +6,7 @@ import Link from "next/link";
 import cn from "classnames";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { SearchForm } from "@/features/search";
-import { AskCopilotButton, CopilotChat } from "@/features/ask-copilot";
+import { AskCopilotButton } from "@/features/ask-copilot";
 import { SignInButton, SignUpButton } from "@/features/auth";
 import { Avatar } from "@/shared/ui/Avatar/Avatar";
 import { Button } from "@/shared/ui/Button/Button";
@@ -14,6 +14,7 @@ import { useAuth } from "@/shared/hooks/auth";
 import { useThemeStore } from "@/features/toggle-theme";
 import { ProfileContextMenu } from "../ProfileContextMenu/ProfileContextMenu";
 import styles from "./styles.module.scss";
+import { useRouter } from "next/navigation";
 
 const AuthSkeleton = () => (
   <div className="flex items-center gap-2 animate-pulse">
@@ -32,7 +33,7 @@ export const Header: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
   const { user, session, userProfile, loading } = useAuth();
   const { theme } = useThemeStore();
   const pathname = usePathname();
-
+  const router = useRouter();
   useEffect(() => {
     const handleWindowClick = (e: MouseEvent) => {
       if (
@@ -66,7 +67,7 @@ export const Header: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
       <div className={styles.content}>
         <div className={cn(styles.box, styles.left)}>
           <Link className={styles.headerLink} href="/">
-            <img className={styles.logo} src="/img/logo.png" alt="logo" />
+            <img className={styles.logo} src="/img/logo_.png" alt="logo" />
             <span className="text-neutral-950 dark:text-white">MINTARION</span>
           </Link>
         </div>
@@ -77,6 +78,10 @@ export const Header: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
             showList
           />
           <AskCopilotButton border={theme === "dark"} />
+          <Button onClick={() => router.push("/account/subscription")}>
+            <img src="/img/Vector.png" alt="" />
+            Try Pro
+          </Button>
         </div>
         <div className={cn(styles.box, styles.right)}>
           <div className={styles.socials}>

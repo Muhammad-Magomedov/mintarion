@@ -6,10 +6,16 @@ import { FaXTwitter } from "react-icons/fa6";
 import { MdAlternateEmail } from "react-icons/md";
 import { IoDocumentText } from "react-icons/io5";
 import styles from "./styles.module.scss";
+import { cn } from "@/shared/lib/shadcn/lib/utils";
 
 export const Footer = () => {
   return (
-    <footer className={styles.footer}>
+    <footer
+      className={cn(
+        styles.footer,
+        "border-t-[1px] border-solid border-slate-200 dark:border-gray-650"
+      )}
+    >
       <div>
         <img src="/img/newLogo.png" alt="logo" />
       </div>

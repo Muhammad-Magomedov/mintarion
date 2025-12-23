@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useState } from "react";
 import cn from "classnames";
@@ -24,8 +24,7 @@ export const cardVariants = cva("", {
 export type SubscriptionCardAttributesType =
   React.HTMLAttributes<HTMLDivElement> & React.LiHTMLAttributes<HTMLLIElement>;
 export interface ISubscriptionCardProps
-  extends SubscriptionCardAttributesType,
-    VariantProps<typeof cardVariants> {
+  extends SubscriptionCardAttributesType, VariantProps<typeof cardVariants> {
   isActive?: boolean;
   as?: "li" | "div";
   data: ISubscriptionPlan;
@@ -61,48 +60,132 @@ export const SubscriptonCard: React.FC<ISubscriptionCardProps> = ({
         <span>MintaLab</span>&nbsp;
         <span className="text-[#6BD368]">{plan ?? "Unknown"}</span>
       </h3>
-      <p className={cn(styles.desc, "text-neutral-400 dark:text-gray-400")}>{description ?? ""}</p>
+      <p className={cn(styles.desc, "text-neutral-400 dark:text-gray-400")}>
+        {description ?? ""}
+      </p>
       <div className={cn(styles.price, styles.pricePerMonth)}>
-        <span
-          className={cn(styles.priceTitle, "font-semibold")}
-        >
-          {pricePerMonth && isAnnualPayment
-            ? (pricePerMonth * (Math.abs(100 - calculateDiscountPercent(pricePerMonth, pricePerYear)) / 100)).toFixed(2)
-            : pricePerMonth && !isAnnualPayment
-            ? pricePerMonth
-            : 0}$
-        </span>
-        &nbsp;
-      <span className={cn(styles.priceDesc, "text-neutral-400 dark:text-gray-400")}>
-          / month
-        </span>
+        {!isAnnualPayment ? (
+          <>
+            <span className={cn(styles.priceTitle, "font-semibold")}>
+              {pricePerMonth && isAnnualPayment
+                ? (
+                    pricePerMonth *
+                    (Math.abs(
+                      100 -
+                        calculateDiscountPercent(pricePerMonth, pricePerYear)
+                    ) /
+                      100)
+                  ).toFixed(2)
+                : pricePerMonth && !isAnnualPayment
+                  ? pricePerMonth
+                  : 0}
+              $
+            </span>
+            &nbsp;
+            <span
+              className={cn(
+                styles.priceDesc,
+                "text-neutral-400 dark:text-gray-400"
+              )}
+            >
+              / month
+            </span>
+          </>
+        ) : (
+          <>
+            <span className={cn(styles.priceTitle, "font-semibold")}>
+              {pricePerYear ?? 0}$
+            </span>
+            &nbsp;
+            <span
+              className={cn(
+                styles.priceDesc,
+                "text-neutral-400 dark:text-gray-400"
+              )}
+            >
+              / year, billed monthly
+            </span>
+          </>
+        )}
       </div>
       <div className={cn(styles.price, styles.pricePerYear)}>
-        <span
-          className={cn(styles.priceTitle, "dark:text-white font-semibold")}
-        >
-          {pricePerYear ?? 0}$
-        </span>
-        &nbsp;
-        <span className={cn(styles.priceDesc, "text-neutral-400 dark:text-gray-400")}>
-          / year, billed monthly
-        </span>
+        {isAnnualPayment ? (
+          <>
+            <span
+              className={cn(styles.priceTitle, "dark:text-white font-semibold")}
+            >
+              {pricePerMonth && isAnnualPayment
+                ? (
+                    pricePerMonth *
+                    (Math.abs(
+                      100 -
+                        calculateDiscountPercent(pricePerMonth, pricePerYear)
+                    ) /
+                      100)
+                  ).toFixed(2)
+                : pricePerMonth && !isAnnualPayment
+                  ? pricePerMonth
+                  : 0}
+              $
+            </span>
+            &nbsp;
+            <span
+              className={cn(
+                styles.priceDesc,
+                "text-neutral-400 dark:text-gray-400"
+              )}
+            >
+              / month
+            </span>
+          </>
+        ) : (
+          <>
+            <span
+              className={cn(styles.priceTitle, "dark:text-white font-semibold")}
+            >
+              {pricePerYear ?? 0}$
+            </span>
+            &nbsp;
+            <span
+              className={cn(
+                styles.priceDesc,
+                "text-neutral-400 dark:text-gray-400"
+              )}
+            >
+              / year, billed monthly
+            </span>
+          </>
+        )}
       </div>
-      {!isActive &&
+      {!isActive && (
         <div className={styles.discount}>
-          <Switch className={styles.switch} onChange={(e) => setIsAnnualPayment(e.target.checked)} variant="primary" />
+          <Switch
+            className={styles.switch}
+            onChange={(e) => setIsAnnualPayment(e.target.checked)}
+            variant="primary"
+          />
           <span className="text-gray-400">Bill annually</span>
           <span className="text-[1.5em] text-[#67C564] font-semibold">
             {calculateDiscountPercent(pricePerMonth, pricePerYear)} %
           </span>
-          <div className={cn(styles.discountIconWrapper, cardVariants({ variant }))}>
+          <div
+            className={cn(
+              styles.discountIconWrapper,
+              cardVariants({ variant })
+            )}
+          >
             <Gift height="1em" />
           </div>
-        </div>}
+        </div>
+      )}
       {isActive ? (
         <div className={styles.btnList}>
-          <Button className={styles.btn} disabled>Your Current Plan</Button>
-          <Button className={styles.btn} variant="red">Cancel subscription</Button>
+          <Button className={styles.btn} disabled>
+            Your Current Plan
+          </Button>
+          <Button className={styles.btn} variant="red">
+            Cancel subscription
+          </Button>
         </div>
       ) : (
         <div className={styles.btnList}>

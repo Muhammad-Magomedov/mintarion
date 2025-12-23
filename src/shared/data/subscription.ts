@@ -4,8 +4,8 @@ export const subscriptionPlans: ISubscriptionPlan[] = [
   {
     plan: "PRO",
     description: "For active traders and researchers",
-    pricePerMonth: 77.77,
-    pricePerYear: 839.92,
+    pricePerMonth: 39,
+    pricePerYear: 420,
     features: [
       "Full access to MintaLab AI Copilot",
       "Advanced review & weekly digests",
