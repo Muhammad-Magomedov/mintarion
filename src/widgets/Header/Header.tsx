@@ -10,11 +10,12 @@ import { AskCopilotButton } from "@/features/ask-copilot";
 import { SignInButton, SignUpButton } from "@/features/auth";
 import { Avatar } from "@/shared/ui/Avatar/Avatar";
 import { Button } from "@/shared/ui/Button/Button";
-import { useAuth } from "@/shared/hooks/auth";
+import { useAuth, useAuthStatus } from "@/shared/hooks/auth";
 import { useThemeStore } from "@/features/toggle-theme";
 import { ProfileContextMenu } from "../ProfileContextMenu/ProfileContextMenu";
 import styles from "./styles.module.scss";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 const AuthSkeleton = () => (
   <div className="flex items-center gap-2 animate-pulse">
@@ -30,7 +31,8 @@ export const Header: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState<boolean>(false);
   const profileContextMenuRef = useRef<HTMLDivElement | null>(null);
   const profileTriggerRef = useRef<HTMLButtonElement | null>(null);
-  const { user, session, userProfile, loading } = useAuth();
+  const { user, session } = useAuth();
+  const { isAuthenticated } = useAuthStatus();
   const { theme } = useThemeStore();
   const pathname = usePathname();
   const router = useRouter();
@@ -59,6 +61,14 @@ export const Header: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
     setIsProfileMenuOpen(false);
   }, [pathname]);
 
+  const handleNavigate = () => {
+    if (isAuthenticated) {
+      router.push("/account/subscription");
+    } else {
+      toast.error("You need to authorize befor");
+    }
+  };
+
   return (
     <header
       className={cn(styles.header, className, "bg-green-50 dark:bg-green-980")}
@@ -78,7 +88,7 @@ export const Header: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
             showList
           />
           <AskCopilotButton border={theme === "dark"} />
-          <Button onClick={() => router.push("/account/subscription")}>
+          <Button onClick={handleNavigate}>
             <img src="/img/Vector.png" alt="" />
             Try Pro
           </Button>
